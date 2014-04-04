@@ -17,7 +17,7 @@ class moolah_payment:
         data = f.read()
         return data
 
-    def check_staus(self, tx_id):
+    def check_status(self, tx_id):
         f = urllib.urlopen("https://moolah.io/api/pay/check/" + tx_id)
         data = f.read()
         return data
@@ -36,5 +36,15 @@ class moolah_send:
                                   })
 
         f = urllib.urlopen("https://moolah.ch/api/merchant/send/", params)
+        data = f.read()
+        return data
+
+    def check_balance(self, guid):
+        params = urllib.urlencode({
+                                  'guid': guid,
+                                  'api_ley': self.api_key,
+                                  })
+
+        f = urllib.urlopen("https://moolah.ch/api/merchant/balance/", params)
         data = f.read()
         return data
