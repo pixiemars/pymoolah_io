@@ -31,6 +31,7 @@ class moolah_send:
     def send_funds(self, guid, payload):
         params = urllib.urlencode({
                                   'guid': guid,
+                                  'api_ley': self.api_key,
                                   'payload:': payload
                                   })
 
