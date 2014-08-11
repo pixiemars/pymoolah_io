@@ -1,50 +1,37 @@
 import urllib
 
 
-class moolah_payment:
+class moolah:
 
-    def gen_address(self, guid, currency, amount, product, returnUrl, ipn):
+    def create(self, apiKey, coin, currency, amount, product, apiSecret=None, ipn=None, ipn_extra=None):
         params = urllib.urlencode({
-                                  'guid': guid,
+                                  'apiKey': apiKey,
+                                  'coin':coin,
                                   'currency': currency,
                                   'amount': amount,
                                   'product': product,
-                                  'return': returnUrl,
-                                  'ipn:': ipn
+                                  'apiSecret': apiSecret,
+                                  'ipn:': ipn,
+                                  'ipn_extra':ipn_extra
                                   })
 
-        f = urllib.urlopen("https://moolah.io/api/pay?%s" % params)
+        f = urllib.urlopen("https://api.moolah.io/v2/private/merchant/create",  params)
         data = f.read()
         return data
 
-    def check_status(self, tx_id):
-        f = urllib.urlopen("https://moolah.io/api/pay/check/" + tx_id)
-        data = f.read()
-        return data
-
-
-class moolah_send:
-
-    def __init__(self, api_key):
-        self.api_key = api_key
-
-    def send_funds(self, guid, payload):
+    def status(self, guid, apiKey):
         params = urllib.urlencode({
-                                  'guid': guid,
-                                  'api_ley': self.api_key,
-                                  'payload:': payload
+                                  'apiKey': apiKey,
+                                  'guid': guid
                                   })
+        f = urllib.urlopen("https://api.moolah.io/v2/private/merchant/status", params)
 
-        f = urllib.urlopen("https://moolah.ch/api/merchant/send/", params)
         data = f.read()
         return data
 
-    def check_balance(self, guid):
-        params = urllib.urlencode({
-                                  'guid': guid,
-                                  'api_ley': self.api_key,
-                                  })
+    def ipn(transactionata, responseData):
+        #still needs generic code for handling ipn response
+    	return True
 
-        f = urllib.urlopen("https://moolah.ch/api/merchant/balance/", params)
-        data = f.read()
-        return data
+
+
