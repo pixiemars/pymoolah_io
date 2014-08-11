@@ -5,8 +5,6 @@ Python library for Moolah.IO
 
 The moolah_payment class has now been tested and you can see an example of its use in: moolah_payment_test.py
 
-The moolah_send class is still untested but should be ready soon.
-
 Donations:
 
 BTC: 13Tug6KpmHwAsztY8pGMLAhYsWNgrHXzHM
