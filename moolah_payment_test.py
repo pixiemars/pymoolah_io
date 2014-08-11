@@ -1,29 +1,23 @@
-from moolah_io import moolah_payment
+from moolah_io import moolah
 import json
-
-# Example use of moolah_payment class to generate a payment address using
-# moolah_payment.gen_address() and check the transaction status using
-# moolah_payment.check_status()
-
-guid = "guid_as_found_on_moolah_dashboard"
-
-# Generate payment address
-p = moolah_payment()
-product1 = p.gen_address(guid, 'GBP', '10',
-                         'product1', 'http://example.com',
-                         'http://example.com/ipn')
-
-# show payment address
-print product1
+m = moolah()
+apiKey = 'YOUR-API-KEY'
+sale = m.create(
+    apiKey,
+    'bitcoin',
+    'GBP',
+    '10',
+    'test',
+	)
 
 # decode json to python
-decodedProduct = json.loads(product1)
+decodedProduct = json.loads(sale)
 print decodedProduct
 
-# get transaction id
-tx = decodedProduct['tx']
-print tx
+# get transaction guid
+guid = decodedProduct['guid']
+print guid
 
 # check payment status
-productStatus = p.check_status(tx)
-print productStatus
+saleStatus = m.status(guid, apiKey)
+print saleStatus
